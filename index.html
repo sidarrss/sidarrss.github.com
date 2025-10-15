@@ -8,17 +8,21 @@
 <style>
 :root {
   --dark-bg:#0a0f0a;
-  --card:#121815;
+  --light-bg:#f0f5f0;
+  --card-dark:#121815;
+  --card-light:#e0f0e0;
   --accent:#1f7a3f;
   --accent-soft:rgba(31,122,63,0.3);
-  --muted:#c0c0c0;
+  --muted-dark:#c0c0c0;
+  --muted-light:#333;
   --ease:cubic-bezier(0.645,0.045,0.355,1);
   --glass:rgba(18,24,21,0.7);
 }
 
 body {
-  margin:0; font-family:'Segoe UI', sans-serif; background:var(--dark-bg); color:#e8efe8; scroll-behavior:smooth;
+  margin:0; font-family:'Segoe UI', sans-serif; background:var(--dark-bg); color:#e8efe8; scroll-behavior:smooth; transition:0.5s var(--ease);
 }
+body.light { background:var(--light-bg); color:var(--muted-light); }
 
 h2 { font-family:'Roboto Slab', serif; font-size:2rem; margin-bottom:16px; }
 .underline { display:inline-block; height:2px; background:var(--accent); width:50px; vertical-align:middle; margin-left:8px; }
@@ -26,7 +30,7 @@ h2 { font-family:'Roboto Slab', serif; font-size:2rem; margin-bottom:16px; }
 .grid { display:grid; gap:24px; grid-template-columns:repeat(auto-fit,minmax(200px,1fr)); }
 
 .card {
-  background:var(--card);
+  background:var(--card-dark);
   border-radius:16px;
   padding:24px;
   position:relative;
@@ -35,12 +39,12 @@ h2 { font-family:'Roboto Slab', serif; font-size:2rem; margin-bottom:16px; }
   transition:0.35s var(--ease);
   box-shadow:0 6px 16px rgba(0,0,0,0.6);
 }
+body.light .card { background:var(--card-light); }
+
 .card:hover { 
   transform:scale(1.05) rotateZ(0.5deg); 
   box-shadow:0 12px 32px rgba(0,0,0,0.9); 
 }
-.card canvas.sparkle { position:absolute; inset:0; pointer-events:none; }
-
 .card[title]:hover::after {
   content: attr(title);
   position: absolute; bottom:100%; left:50%;
@@ -55,23 +59,32 @@ section { padding:64px 16px; }
 
 /* modal */
 #case-modal { display:none; position:fixed; inset:0; background:rgba(0,0,0,0.88); z-index:200; backdrop-filter:blur(6px); justify-content:center; align-items:center; overflow-y:auto; padding:24px; }
-#case-modal > div { position:relative; background:var(--card); border-radius:16px; max-width:960px; width:100%; padding:24px; box-shadow:0 10px 36px rgba(0,0,0,0.8); transform:scale(0.95); opacity:0; transition:0.32s var(--ease); }
-#modal-close { position:absolute; top:16px; right:16px; background:none; border:none; color:var(--muted); font-size:1.3rem; cursor:pointer; }
+#case-modal > div { position:relative; background:var(--card-dark); border-radius:16px; max-width:960px; width:100%; padding:24px; box-shadow:0 10px 36px rgba(0,0,0,0.8); transform:scale(0.95); opacity:0; transition:0.32s var(--ease); }
+body.light #case-modal > div { background:var(--card-light); }
+#modal-close { position:absolute; top:16px; right:16px; background:none; border:none; color:var(--muted-dark); font-size:1.3rem; cursor:pointer; }
+body.light #modal-close { color:var(--muted-light); }
 #modal-title { font-family:'Roboto Slab', serif; color:#e8efe8; margin-bottom:12px; }
-#modal-desc { color:var(--muted); margin-bottom:16px; line-height:1.5rem; }
+body.light #modal-title { color:var(--muted-light); }
+#modal-desc { color:var(--muted-dark); margin-bottom:16px; line-height:1.5rem; }
+body.light #modal-desc { color:var(--muted-light); }
 #modal-tech span { background:var(--accent-soft); padding:4px 10px; border-radius:6px; font-size:0.85rem; color:#eafaf0; margin-right:6px; transition:0.3s var(--ease); }
 #modal-tech span:hover { background:var(--accent); color:#e8efe8; box-shadow:0 4px 12px rgba(31,122,63,0.7); }
-
 #modal-img img { width:100%; display:block; border-radius:12px; max-height:480px; object-fit:cover; transform:translateY(20px); opacity:0; transition:0.5s var(--ease); }
 
 /* particles background */
 #particles { position:fixed; inset:0; z-index:0; background:transparent; pointer-events:none; }
 
 /* nav */
-nav { position:sticky; top:0; background:var(--dark-bg); padding:16px; z-index:100; display:flex; gap:24px; }
-nav a { color:var(--muted); text-decoration:none; transition:0.3s; }
+nav { position:sticky; top:0; background:var(--dark-bg); padding:16px; z-index:100; display:flex; gap:24px; justify-content:flex-start; align-items:center; transition:0.5s var(--ease);}
+body.light nav { background:var(--light-bg); }
+nav a { color:var(--muted-dark); text-decoration:none; transition:0.3s; }
+body.light nav a { color:var(--muted-light); }
 nav a:hover { color:var(--accent); }
 
+/* dark/light toggle */
+#mode-toggle { margin-left:auto; cursor:pointer; padding:8px 12px; border-radius:8px; background:var(--accent-soft); color:#fff; font-weight:bold; transition:0.3s; }
+#mode-toggle:hover { background:var(--accent); }
+body.light #mode-toggle { background:var(--accent-soft); color:#000; }
 </style>
 </head>
 <body>
@@ -82,6 +95,7 @@ nav a:hover { color:var(--accent); }
   <a href="#projects">projects</a>
   <a href="#skills">skills</a>
   <a href="#about">about</a>
+  <div id="mode-toggle">Toggle Mode</div>
 </nav>
 
 <section id="projects" aria-labelledby="projects-title">
@@ -110,20 +124,27 @@ nav a:hover { color:var(--accent); }
 </div>
 
 <script>
-// ---------- particles ----------
+// --------- Dark/Light Mode Toggle ----------
+const toggle = document.getElementById('mode-toggle');
+toggle.addEventListener('click',()=>{
+  document.body.classList.toggle('light');
+});
+
+// --------- Particles Deterministic ----------
 const canvas=document.getElementById('particles');
 const ctx=canvas.getContext('2d');
 canvas.width=window.innerWidth; canvas.height=window.innerHeight;
-let stars=Array.from({length:150},()=>({x:Math.random()*canvas.width, y:Math.random()*canvas.height, r:Math.random()*1.2+0.3, alpha:Math.random()}));
+let seed=12345;
+function random() { seed=(seed*9301+49297)%233280; return seed/233280; }
+let stars=Array.from({length:150},(_,i)=>({x:random()*canvas.width, y:random()*canvas.height, r:random()*1.2+0.3, phase:random()*Math.PI*2}));
 function drawStars(){
   ctx.clearRect(0,0,canvas.width,canvas.height);
   stars.forEach(s=>{
-    s.alpha+=Math.random()*0.02-0.01;
-    if(s.alpha>1)s.alpha=1;
-    if(s.alpha<0)s.alpha=0;
+    s.phase += 0.01;
+    const alpha = 0.5 + 0.5*Math.sin(s.phase);
     ctx.beginPath();
     ctx.arc(s.x,s.y,s.r,0,2*Math.PI);
-    ctx.fillStyle=`rgba(255,255,255,${s.alpha})`;
+    ctx.fillStyle=`rgba(255,255,255,${alpha})`;
     ctx.fill();
   });
   requestAnimationFrame(drawStars);
@@ -131,7 +152,7 @@ function drawStars(){
 drawStars();
 window.addEventListener('resize',()=>{canvas.width=window.innerWidth; canvas.height=window.innerHeight;});
 
-// ---------- project data ----------
+// --------- Project Cards ----------
 const projectData=[
   {title:"Portfolio Website",desc:"A personal portfolio website showcasing skills, projects, and case studies.",tech:["HTML","CSS","JS"],img:"https://via.placeholder.com/800x400"},
   {title:"ML Model",desc:"A machine learning prototype demonstrating predictive analytics.",tech:["Python","TensorFlow"],img:"https://via.placeholder.com/800x400"},
@@ -140,38 +161,4 @@ const projectData=[
 const grid=document.getElementById('project-grid');
 projectData.forEach(proj=>{
   const card=document.createElement('div'); card.className='card';
-  card.innerHTML=`<h3>${proj.title}</h3><p>${proj.desc}</p>`;
-  card.addEventListener('click',()=>openCaseModal(proj));
-  grid.appendChild(card);
-});
-
-// ---------- skills data ----------
-const skillsData=[
-  {name:"Python",icon:"<i class='devicon-python-plain colored' style='font-size:2.2rem;'></i>"},
-  {name:"JavaScript",icon:"<i class='devicon-javascript-plain colored' style='font-size:2.2rem;'></i>"},
-  {name:"React",icon:"<i class='devicon-react-original colored' style='font-size:2.2rem;'></i>"},
-  {name:"Blender",icon:"<img src='https://raw.githubusercontent.com/devicons/devicon/master/icons/blender/blender-original.svg' style='width:2.2rem; height:2.2rem;'>"}
-];
-const skillsGrid=document.getElementById('skills-grid');
-skillsData.forEach(s=>{
-  const card=document.createElement('div'); card.className='card'; card.setAttribute('title',s.name);
-  card.innerHTML=`${s.icon}<canvas class="sparkle"></canvas>`;
-  skillsGrid.appendChild(card);
-});
-
-// ---------- modal ----------
-const modal=document.getElementById('case-modal'); const modalClose=document.getElementById('modal-close');
-function openCaseModal({title,desc,tech,img}){
-  document.getElementById('modal-title').textContent=title;
-  document.getElementById('modal-desc').textContent=desc;
-  const techContainer=document.getElementById('modal-tech'); techContainer.innerHTML='';
-  tech.forEach(t=>{ const span=document.createElement('span'); span.textContent=t; techContainer.appendChild(span); });
-  const imgDiv=document.getElementById('modal-img'); imgDiv.innerHTML=`<img src="${img}" alt="${title} preview">`;
-  modal.style.display='flex';
-  setTimeout(()=>{ modal.firstElementChild.style.transform='scale(1)'; modal.firstElementChild.style.opacity='1'; modal.querySelector('img').style.transform='translateY(0)'; modal.querySelector('img').style.opacity='1'; },50);
-}
-modalClose.addEventListener('click',()=>{ modal.firstElementChild.style.transform='scale(0.95)'; modal.firstElementChild.style.opacity='0'; setTimeout(()=> modal.style.display='none',320); });
-modal.addEventListener('click',e=>{if(e.target===modal) modalClose.click();});
-</script>
-</body>
-</html>
+  card.inner
