@@ -7,30 +7,33 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.15.1/devicon.min.css">
 <style>
 :root {
-  --dark-bg:#0a0f0a;
-  --light-bg:#f0f5f0;
-  --card-dark:#121815;
-  --card-light:#e0f0e0;
-  --accent:#1f7a3f;
-  --accent-soft:rgba(31,122,63,0.3);
-  --muted-dark:#c0c0c0;
-  --muted-light:#333;
+  --dark-bg:#1c1c1c;
+  --dark-card:#2a2a2a;
+  --dark-text:#e0e0e0;
+  --dark-accent:#b0b0b0;
+  
+  --light-bg:#e0e0e0;
+  --light-card:#d0d0d0;
+  --light-text:#1c1c1c;
+  --light-accent:#7a7a7a;
+
   --ease:cubic-bezier(0.645,0.045,0.355,1);
-  --glass:rgba(18,24,21,0.7);
+  --glass:rgba(28,28,28,0.7);
 }
 
 body {
-  margin:0; font-family:'Segoe UI', sans-serif; background:var(--dark-bg); color:#e8efe8; scroll-behavior:smooth; transition:0.5s var(--ease);
+  margin:0; font-family:'Segoe UI', sans-serif; background:var(--dark-bg); color:var(--dark-text); scroll-behavior:smooth; transition:0.5s var(--ease);
 }
-body.light { background:var(--light-bg); color:var(--muted-light); }
+body.light { background:var(--light-bg); color:var(--light-text); }
 
 h2 { font-family:'Roboto Slab', serif; font-size:2rem; margin-bottom:16px; }
-.underline { display:inline-block; height:2px; background:var(--accent); width:50px; vertical-align:middle; margin-left:8px; }
+.underline { display:inline-block; height:2px; background:var(--dark-accent); width:50px; vertical-align:middle; margin-left:8px; }
+body.light .underline { background:var(--light-accent); }
 
 .grid { display:grid; gap:24px; grid-template-columns:repeat(auto-fit,minmax(200px,1fr)); }
 
 .card {
-  background:var(--card-dark);
+  background:var(--dark-card);
   border-radius:16px;
   padding:24px;
   position:relative;
@@ -38,12 +41,15 @@ h2 { font-family:'Roboto Slab', serif; font-size:2rem; margin-bottom:16px; }
   overflow:hidden;
   transition:0.35s var(--ease);
   box-shadow:0 6px 16px rgba(0,0,0,0.6);
+  display:flex;
+  align-items:center;
+  gap:12px;
 }
-body.light .card { background:var(--card-light); }
+body.light .card { background:var(--light-card); }
 
 .card:hover { 
   transform:scale(1.05) rotateZ(0.5deg); 
-  box-shadow:0 12px 32px rgba(0,0,0,0.9); 
+  box-shadow:0 12px 32px rgba(0,0,0,0.8); 
 }
 
 .card[title]:hover::after {
@@ -51,25 +57,28 @@ body.light .card { background:var(--card-light); }
   position: absolute; bottom:100%; left:50%;
   transform: translateX(-50%);
   background: var(--glass); padding:4px 8px; border-radius:6px;
-  color:#eafaf0; font-size:0.8rem; white-space:nowrap; opacity:0.95;
+  color:var(--dark-text); font-size:0.8rem; white-space:nowrap; opacity:0.95;
   pointer-events:none; box-shadow:0 4px 12px rgba(0,0,0,0.4);
 }
+body.light .card[title]:hover::after { color:var(--light-text); }
 
 /* section spacing */
 section { padding:64px 16px; }
 
 /* modal */
 #case-modal { display:none; position:fixed; inset:0; background:rgba(0,0,0,0.88); z-index:200; backdrop-filter:blur(6px); justify-content:center; align-items:center; overflow-y:auto; padding:24px; }
-#case-modal > div { position:relative; background:var(--card-dark); border-radius:16px; max-width:960px; width:100%; padding:24px; box-shadow:0 10px 36px rgba(0,0,0,0.8); transform:scale(0.95); opacity:0; transition:0.32s var(--ease); }
-body.light #case-modal > div { background:var(--card-light); }
-#modal-close { position:absolute; top:16px; right:16px; background:none; border:none; color:var(--muted-dark); font-size:1.3rem; cursor:pointer; }
-body.light #modal-close { color:var(--muted-light); }
-#modal-title { font-family:'Roboto Slab', serif; color:#e8efe8; margin-bottom:12px; }
-body.light #modal-title { color:var(--muted-light); }
-#modal-desc { color:var(--muted-dark); margin-bottom:16px; line-height:1.5rem; }
-body.light #modal-desc { color:var(--muted-light); }
-#modal-tech span { background:var(--accent-soft); padding:4px 10px; border-radius:6px; font-size:0.85rem; color:#eafaf0; margin-right:6px; transition:0.3s var(--ease); }
-#modal-tech span:hover { background:var(--accent); color:#e8efe8; box-shadow:0 4px 12px rgba(31,122,63,0.7); }
+#case-modal > div { position:relative; background:var(--dark-card); border-radius:16px; max-width:960px; width:100%; padding:24px; box-shadow:0 10px 36px rgba(0,0,0,0.8); transform:scale(0.95); opacity:0; transition:0.32s var(--ease); }
+body.light #case-modal > div { background:var(--light-card); }
+#modal-close { position:absolute; top:16px; right:16px; background:none; border:none; color:var(--dark-text); font-size:1.3rem; cursor:pointer; }
+body.light #modal-close { color:var(--light-text); }
+#modal-title { font-family:'Roboto Slab', serif; color:var(--dark-text); margin-bottom:12px; }
+body.light #modal-title { color:var(--light-text); }
+#modal-desc { color:var(--dark-text); margin-bottom:16px; line-height:1.5rem; }
+body.light #modal-desc { color:var(--light-text); }
+#modal-tech span { background:var(--dark-accent); padding:4px 10px; border-radius:6px; font-size:0.85rem; color:var(--dark-text); margin-right:6px; transition:0.3s var(--ease); }
+#modal-tech span:hover { background:var(--dark-text); color:var(--dark-card); box-shadow:0 4px 12px rgba(176,176,176,0.7); }
+body.light #modal-tech span { background:var(--light-accent); color:var(--light-text); }
+body.light #modal-tech span:hover { background:var(--light-text); color:var(--light-card); box-shadow:0 4px 12px rgba(122,122,122,0.7); }
 #modal-img img { width:100%; display:block; border-radius:12px; max-height:480px; object-fit:cover; transform:translateY(20px); opacity:0; transition:0.5s var(--ease); }
 
 /* particles background */
@@ -78,14 +87,20 @@ body.light #modal-desc { color:var(--muted-light); }
 /* nav */
 nav { position:sticky; top:0; background:var(--dark-bg); padding:16px; z-index:100; display:flex; gap:24px; justify-content:flex-start; align-items:center; transition:0.5s var(--ease);}
 body.light nav { background:var(--light-bg); }
-nav a { color:var(--muted-dark); text-decoration:none; transition:0.3s; }
-body.light nav a { color:var(--muted-light); }
-nav a:hover { color:var(--accent); }
+nav a { color:var(--dark-text); text-decoration:none; transition:0.3s; }
+body.light nav a { color:var(--light-text); }
+nav a:hover { color:var(--dark-accent); }
+body.light nav a:hover { color:var(--light-accent); }
 
 /* dark/light toggle */
-#mode-toggle { margin-left:auto; cursor:pointer; padding:8px 12px; border-radius:8px; background:var(--accent-soft); color:#fff; font-weight:bold; transition:0.3s; }
-#mode-toggle:hover { background:var(--accent); }
-body.light #mode-toggle { background:var(--accent-soft); color:#000; }
+#mode-toggle { margin-left:auto; cursor:pointer; padding:8px 12px; border-radius:8px; background:var(--dark-accent); color:var(--dark-text); font-weight:bold; transition:0.3s; }
+#mode-toggle:hover { background:var(--dark-text); color:var(--dark-card); }
+body.light #mode-toggle { background:var(--light-accent); color:var(--light-text); }
+body.light #mode-toggle:hover { background:var(--light-text); color:var(--light-card); }
+
+/* skills name */
+.skill-name { font-size:1rem; color:var(--dark-text); }
+body.light .skill-name { color:var(--light-text); }
 </style>
 </head>
 <body>
@@ -125,22 +140,22 @@ body.light #mode-toggle { background:var(--accent-soft); color:#000; }
 </div>
 
 <script>
-// --------- Dark/Light Mode Toggle ----------
-const toggle = document.getElementById('mode-toggle');
-toggle.addEventListener('click',()=>{ document.body.classList.toggle('light'); });
+// Dark/Light Toggle
+const toggle=document.getElementById('mode-toggle');
+toggle.addEventListener('click',()=>{document.body.classList.toggle('light');});
 
-// --------- Particles Deterministic ----------
+// Particles
 const canvas=document.getElementById('particles');
 const ctx=canvas.getContext('2d');
 canvas.width=window.innerWidth; canvas.height=window.innerHeight;
 let seed=12345;
-function random() { seed=(seed*9301+49297)%233280; return seed/233280; }
-let stars=Array.from({length:150},(_,i)=>({x:random()*canvas.width, y:random()*canvas.height, r:random()*1.2+0.3, phase:random()*Math.PI*2}));
+function random(){seed=(seed*9301+49297)%233280; return seed/233280;}
+let stars=Array.from({length:150},()=>({x:random()*canvas.width, y:random()*canvas.height, r:random()*1.2+0.3, phase:random()*Math.PI*2}));
 function drawStars(){
   ctx.clearRect(0,0,canvas.width,canvas.height);
   stars.forEach(s=>{
-    s.phase += 0.01;
-    const alpha = 0.5 + 0.5*Math.sin(s.phase);
+    s.phase+=0.01;
+    const alpha=0.5+0.5*Math.sin(s.phase);
     ctx.beginPath();
     ctx.arc(s.x,s.y,s.r,0,2*Math.PI);
     ctx.fillStyle=`rgba(255,255,255,${alpha})`;
@@ -151,7 +166,7 @@ function drawStars(){
 drawStars();
 window.addEventListener('resize',()=>{canvas.width=window.innerWidth; canvas.height=window.innerHeight;});
 
-// --------- Project Cards ----------
+// Projects
 const projectData=[
   {title:"Portfolio Website",desc:"A personal portfolio website showcasing skills, projects, and case studies.",tech:["HTML","CSS","JS"],img:"https://via.placeholder.com/800x400"},
   {title:"ML Model",desc:"A machine learning prototype demonstrating predictive analytics.",tech:["Python","TensorFlow"],img:"https://via.placeholder.com/800x400"},
@@ -165,7 +180,7 @@ projectData.forEach(proj=>{
   grid.appendChild(card);
 });
 
-// --------- Skills ----------
+// Skills
 const skillsData=[
   {name:"Python",icon:"<i class='devicon-python-plain colored' style='font-size:2.2rem;'></i>"},
   {name:"JavaScript",icon:"<i class='devicon-javascript-plain colored' style='font-size:2.2rem;'></i>"},
@@ -177,48 +192,36 @@ skillsData.forEach(s=>{
   const card=document.createElement('div'); 
   card.className='card'; 
   card.setAttribute('title',s.name);
-  card.innerHTML=`${s.icon}`;
+  card.innerHTML=`${s.icon}<span class="skill-name">${s.name}</span>`;
   skillsGrid.appendChild(card);
 });
 
-// --------- Modal ----------
+// Modal
 const modal=document.getElementById('case-modal'); 
 const modalClose=document.getElementById('modal-close');
-
 function openCaseModal({title,desc,tech,img}){
   document.getElementById('modal-title').textContent=title;
   document.getElementById('modal-desc').textContent=desc;
   const techContainer=document.getElementById('modal-tech'); techContainer.innerHTML='';
-  tech.forEach(t=>{
-    const span=document.createElement('span'); 
-    span.textContent=t; 
-    techContainer.appendChild(span);
-  });
-  const imgDiv=document.getElementById('modal-img'); 
-  imgDiv.innerHTML=`<img src="${img}" alt="${title} preview">`;
+  tech.forEach(t=>{const span=document.createElement('span'); span.textContent=t; techContainer.appendChild(span);});
+  const imgDiv=document.getElementById('modal-img'); imgDiv.innerHTML=`<img src="${img}" alt="${title} preview">`;
   modal.style.display='flex';
   setTimeout(()=>{
     const modalContent=modal.firstElementChild;
     modalContent.style.transform='scale(1)';
     modalContent.style.opacity='1';
-    const imgEl=modalContent.querySelector('img');
-    imgEl.style.transform='translateY(0)';
-    imgEl.style.opacity='1';
+    modalContent.querySelector('img').style.transform='translateY(0)';
+    modalContent.querySelector('img').style.opacity='1';
   },50);
 }
-
 modalClose.addEventListener('click',()=>{
   const modalContent=modal.firstElementChild;
-  modalContent.style.transform='scale(0.95)'; 
-  modalContent.style.opacity='0'; 
+  modalContent.style.transform='scale(0.95)'; modalContent.style.opacity='0'; 
   setTimeout(()=> modal.style.display='none',320);
 });
+modal.addEventListener('click',e=>{if(e.target===modal) modalClose.click();});
 
-modal.addEventListener('click',e=>{
-  if(e.target===modal) modalClose.click();
-});
-
-// --------- Scroll spy ----------
+// Scroll spy
 const sections=document.querySelectorAll('section');
 const navLinks=document.querySelectorAll('nav a');
 window.addEventListener('scroll',()=>{
@@ -228,10 +231,9 @@ window.addEventListener('scroll',()=>{
     if(pageYOffset >= sectionTop) current=section.getAttribute('id');
   });
   navLinks.forEach(link=>{
-    link.style.color = (link.getAttribute('href').substring(1)===current)?'var(--accent)':(document.body.classList.contains('light')? 'var(--muted-light)':'var(--muted-dark)');
+    link.style.color = (link.getAttribute('href').substring(1)===current)?(document.body.classList.contains('light')? 'var(--light-accent)':'var(--dark-accent)'):(document.body.classList.contains('light')? 'var(--light-text)':'var(--dark-text)');
   });
 });
 </script>
-
 </body>
 </html>
