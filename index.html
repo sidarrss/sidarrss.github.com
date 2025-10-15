@@ -6,33 +6,46 @@
 <title>turevia</title>
 <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
 <style>
+/* Reset & base */
 *{margin:0;padding:0;box-sizing:border-box;scroll-behavior:smooth;}
-body{font-family:'Courier New', Courier, monospace;background-color:#0d0d0d;color:#e0e0e0;line-height:1.6;overflow-x:hidden;transition:background 0.5s,color 0.5s;}
+body{font-family:'Courier New', Courier, monospace;background:#0d0d0d;color:#e0e0e0;overflow-x:hidden;transition:0.5s;}
 #particles{position:fixed;top:0;left:0;width:100%;height:100%;z-index:-1;}
-header{padding:1rem 2rem;text-align:center;background-color:rgba(10,10,10,0.85);border-bottom:2px solid #006400;position:sticky;top:0;z-index:1000;backdrop-filter:blur(5px);border-radius:0 0 10px 10px;transition:background 0.5s;}
-header h1{font-size:3rem;transition:transform 0.3s;}
+
+/* Header & Navbar */
+header{padding:1rem 2rem;text-align:center;background:rgba(10,10,10,0.85);position:sticky;top:0;z-index:1000;backdrop-filter:blur(5px);border-radius:0 0 12px 12px;transition:0.5s;border-bottom:2px solid #006400;}
+header h1{font-size:3rem;transition:0.3s;}
 header h1:hover{transform:scale(1.05);}
 nav{margin-top:1rem;}
-nav a{margin:0 1rem;font-weight:bold;color:#006400;transition:color 0.3s,transform 0.3s;}
-nav a:hover{color:#00ff00;transform:scale(1.05);}
-nav a.active{color:#00ff00;transform:scale(1.1);font-weight:bold;}
-section{padding:3rem 2rem;max-width:1000px;margin:auto;opacity:0;transform:translateY(40px);transition:transform 0.8s ease-out,opacity 0.8s ease-out;}
-h2{color:#006400;margin-bottom:1rem;border-bottom:1px solid #006400;display:inline-block;position:relative;transition:all 0.5s;}
-h2::after{content:'';position:absolute;left:0;bottom:-2px;width:0%;height:2px;background:#00ff00;transition:width 0.5s;}
+nav a{margin:0 1rem;font-weight:bold;color:#006400;padding:0.3rem 0.6rem;border-radius:6px;transition:all 0.3s;}
+nav a:hover{color:#00ff00;background:rgba(0,255,0,0.1);}
+nav a.active{color:#00ff00;background:rgba(0,255,0,0.2);}
+
+/* Sections */
+section{padding:3rem 2rem;max-width:1000px;margin:auto;opacity:0;transform:translateY(50px);transition:all 0.8s ease-out;}
+h2{color:#00ff00;font-size:2rem;margin-bottom:1rem;position:relative;display:inline-block;}
+h2::after{content:'';position:absolute;left:0;bottom:-3px;width:0%;height:3px;background:linear-gradient(90deg,#00ff00,#00ff99);transition:width 0.6s;}
 h2:hover::after{width:100%;}
+
+/* Cards */
 .projects,.skills{display:flex;flex-wrap:wrap;gap:1rem;}
-.card{position:relative;overflow:hidden;background-color:#1a1a1a;padding:1rem;border-radius:8px;flex:1 1 250px;border:1px solid #006400;transition:transform 0.5s,box-shadow 0.5s;opacity:0;transform:translateY(20px) rotateX(5deg);}
+.card{position:relative;overflow:hidden;background:#1a1a1a;padding:1rem;border-radius:10px;flex:1 1 250px;border:1px solid #006400;transition:transform 0.5s,box-shadow 0.5s,background 0.3s;opacity:0;transform:translateY(20px) rotateX(5deg);}
+.card:hover{transform:translateY(-10px) rotateX(0deg) scale(1.05);box-shadow:0 0 30px rgba(0,255,0,0.7);}
 .card img{width:100%;border-radius:5px;margin-bottom:0.5rem;}
-.card:hover{transform:translateY(-10px) rotateX(0deg) scale(1.05);box-shadow:0 0 25px rgba(0,255,0,0.7);}
 .sparkle{position:absolute;top:0;left:0;width:100%;height:100%;pointer-events:none;}
+
+/* Footer & social */
 footer{text-align:center;padding:1rem;border-top:2px solid #006400;font-size:0.9rem;margin-top:2rem;}
-@media(max-width:768px){.projects,.skills{flex-direction:column;}}
 .social-icons a{margin:0 0.5rem;font-size:1.5rem;transition:transform 0.3s,color 0.3s;}
 .social-icons a:hover{transform:scale(1.3);color:#00ff00;}
+
+/* Responsive */
+@media(max-width:768px){.projects,.skills{flex-direction:column;}}
 </style>
 </head>
 <body>
+
 <canvas id="particles"></canvas>
+
 <header>
 <h1>turevia</h1>
 <nav>
@@ -51,7 +64,7 @@ footer{text-align:center;padding:1rem;border-top:2px solid #006400;font-size:0.9
 <section id="projects">
 <h2>projects</h2>
 <div class="projects">
-<!-- project cards empty for now -->
+<!-- empty for now, add later -->
 </div>
 </section>
 
@@ -60,7 +73,7 @@ footer{text-align:center;padding:1rem;border-top:2px solid #006400;font-size:0.9
 <div class="skills">
 <div class="card">Software: Python, JS, C++</div>
 <div class="card">Web Development: HTML, CSS, React</div>
-<div class="card">Artificial Intelligence & Machine Learning</div>
+<div class="card">AI & Machine Learning</div>
 <div class="card">3D Modeling & Design</div>
 </div>
 </section>
@@ -68,30 +81,28 @@ footer{text-align:center;padding:1rem;border-top:2px solid #006400;font-size:0.9
 <section id="contact">
 <h2>contact</h2>
 <div class="social-icons">
-<a href="https://github.com/username" target="_blank"><i class="fab fa-github"></i></a>
-<a href="https://linkedin.com/in/username" target="_blank"><i class="fab fa-linkedin"></i></a>
-<a href="mailto:email@example.com"><i class="fas fa-envelope"></i></a>
+<a href="#"><i class="fab fa-github"></i></a>
+<a href="#"><i class="fab fa-linkedin"></i></a>
+<a href="#"><i class="fas fa-envelope"></i></a>
 </div>
 </section>
 
 <footer>created by sidar</footer>
 
 <script>
-// background stars with twinkle
+// Background stars with depth & twinkle
 const canvas = document.getElementById('particles');
 const ctx = canvas.getContext('2d');
-let w=canvas.width=window.innerWidth;
-let h=canvas.height=window.innerHeight;
-const stars=[];
-const starCount=150;
-class Star{constructor(){this.x=Math.random()*w;this.y=Math.random()*h;this.r=Math.random()*1.5+0.5;this.sX=(Math.random()-0.5)*0.5;this.sY=(Math.random()-0.5)*0.5;this.o=Math.random()*0.8+0.2;this.oS=Math.random()*0.02+0.005;}update(){this.x+=this.sX;this.y+=this.sY;if(this.x<0||this.x>w)this.sX*=-1;if(this.y<0||this.y>h)this.sY*=-1;this.o+=this.oS;if(this.o>1||this.o<0.2)this.oS*=-1;}draw(){ctx.beginPath();ctx.arc(this.x,this.y,this.r,0,Math.PI*2);ctx.fillStyle=`rgba(255,255,255,${this.o})`;ctx.fill();ctx.shadowColor='white';ctx.shadowBlur=3;}}
+let w=canvas.width=window.innerWidth,h=canvas.height=window.innerHeight;
+const stars=[],starCount=180;
+class Star{constructor(){this.x=Math.random()*w;this.y=Math.random()*h;this.r=Math.random()*1.5+0.5;this.sX=(Math.random()-0.5)*0.3;this.sY=(Math.random()-0.5)*0.3;this.o=Math.random()*0.8+0.2;this.oS=Math.random()*0.02+0.005;}update(){this.x+=this.sX;this.y+=this.sY;if(this.x<0||this.x>w)this.sX*=-1;if(this.y<0||this.y>h)this.sY*=-1;this.o+=this.oS;if(this.o>1||this.o<0.2)this.oS*=-1;}draw(){ctx.beginPath();ctx.arc(this.x,this.y,this.r,0,Math.PI*2);ctx.fillStyle=`rgba(255,255,255,${this.o})`;ctx.fill();ctx.shadowColor='white';ctx.shadowBlur=2;}}
 function initStars(){for(let i=0;i<starCount;i++)stars.push(new Star());}
 function animateStars(){ctx.clearRect(0,0,w,h);stars.forEach(s=>{s.update();s.draw();});requestAnimationFrame(animateStars);}
 
-// scroll animation & navbar active
+// Scroll fade & navbar active
 window.addEventListener('DOMContentLoaded',()=>{
 const cards=document.querySelectorAll('.card');
-cards.forEach((c,i)=>{setTimeout(()=>{c.style.opacity='1';c.style.transform='translateY(0) rotateX(0deg)';},300+i*200);});
+cards.forEach((c,i)=>{setTimeout(()=>{c.style.opacity='1';c.style.transform='translateY(0) rotateX(0deg)';},200+i*150);});
 const sections=document.querySelectorAll('section');
 const navLinks=document.querySelectorAll('nav a');
 window.addEventListener('scroll',()=>{
@@ -99,13 +110,22 @@ let scrollPos=window.scrollY+window.innerHeight/2;
 sections.forEach(sec=>{
 let top=sec.offsetTop,bottom=top+sec.offsetHeight,id=sec.getAttribute('id');
 if(scrollPos>=top&&scrollPos<bottom){navLinks.forEach(l=>l.classList.remove('active'));document.querySelector(`nav a[href="#${id}"]`).classList.add('active');}
-if(sec.getBoundingClientRect().top<window.innerHeight*0.85){sec.style.opacity=1;sec.style.transform='translateY(0)';}else{sec.style.opacity=0;sec.style.transform='translateY(40px)';}
+if(sec.getBoundingClientRect().top<window.innerHeight*0.85){sec.style.opacity=1;sec.style.transform='translateY(0)';}else{sec.style.opacity=0;sec.style.transform='translateY(50px)';}
 });
 });
 });
 
-// sparkle effect on card hover
+// Card sparkle on hover
 class Sparkle{constructor(card){this.card=card;this.canvas=document.createElement('canvas');this.canvas.classList.add('sparkle');card.appendChild(this.canvas);this.ctx=this.canvas.getContext('2d');this.p=[];this.resize();this.active=false;this.animate=this.animate.bind(this);window.addEventListener('resize',()=>this.resize());card.addEventListener('mouseenter',()=>this.active=true);card.addEventListener('mouseleave',()=>this.active=false);}
 resize(){this.canvas.width=this.card.offsetWidth;this.canvas.height=this.card.offsetHeight;}
 addParticles(){for(let i=0;i<6;i++){this.p.push({x:Math.random()*this.canvas.width,y:Math.random()*this.canvas.height,radius:Math.random()*2+1,sX:(Math.random()-0.5)*0.5,sY:(Math.random()-0.5)*0.5,o:Math.random()*0.5+0.5});}}
-animate(){this.ctx.clearRect(0,0,this.canvas.width,this.canvas.height);if(this.active)this.addParticles();this.p.forEach(p=>{p.x+=p
+animate(){this.ctx.clearRect(0,0,this.canvas.width,this.canvas.height);if(this.active)this.addParticles();this.p.forEach(p=>{p.x+=p.sX;p.y+=p.sY;p.o-=0.01;});this.p=this.p.filter(p=>p.o>0);this.p.forEach(p=>{this.ctx.beginPath();this.ctx.arc(p.x,p.y,p.radius,0,Math.PI*2);this.ctx.fillStyle=`rgba(255,255,255,${p.o})`;this.ctx.fill();});requestAnimationFrame(this.animate);}}
+document.querySelectorAll('.card').forEach(c=>{const s=new Sparkle(c);s.animate();});
+
+window.addEventListener('resize',()=>{w=canvas.width=window.innerWidth;h=canvas.height=window.innerHeight;});
+
+initStars();animateStars();
+</script>
+</body>
+</html>
+``
