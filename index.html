@@ -45,6 +45,7 @@ body.light .card { background:var(--card-light); }
   transform:scale(1.05) rotateZ(0.5deg); 
   box-shadow:0 12px 32px rgba(0,0,0,0.9); 
 }
+
 .card[title]:hover::after {
   content: attr(title);
   position: absolute; bottom:100%; left:50%;
@@ -126,9 +127,7 @@ body.light #mode-toggle { background:var(--accent-soft); color:#000; }
 <script>
 // --------- Dark/Light Mode Toggle ----------
 const toggle = document.getElementById('mode-toggle');
-toggle.addEventListener('click',()=>{
-  document.body.classList.toggle('light');
-});
+toggle.addEventListener('click',()=>{ document.body.classList.toggle('light'); });
 
 // --------- Particles Deterministic ----------
 const canvas=document.getElementById('particles');
@@ -161,4 +160,78 @@ const projectData=[
 const grid=document.getElementById('project-grid');
 projectData.forEach(proj=>{
   const card=document.createElement('div'); card.className='card';
-  card.inner
+  card.innerHTML=`<h3>${proj.title}</h3><p>${proj.desc}</p>`;
+  card.addEventListener('click',()=>openCaseModal(proj));
+  grid.appendChild(card);
+});
+
+// --------- Skills ----------
+const skillsData=[
+  {name:"Python",icon:"<i class='devicon-python-plain colored' style='font-size:2.2rem;'></i>"},
+  {name:"JavaScript",icon:"<i class='devicon-javascript-plain colored' style='font-size:2.2rem;'></i>"},
+  {name:"React",icon:"<i class='devicon-react-original colored' style='font-size:2.2rem;'></i>"},
+  {name:"Blender",icon:"<img src='https://raw.githubusercontent.com/devicons/devicon/master/icons/blender/blender-original.svg' style='width:2.2rem; height:2.2rem;'>"}
+];
+const skillsGrid=document.getElementById('skills-grid');
+skillsData.forEach(s=>{
+  const card=document.createElement('div'); 
+  card.className='card'; 
+  card.setAttribute('title',s.name);
+  card.innerHTML=`${s.icon}`;
+  skillsGrid.appendChild(card);
+});
+
+// --------- Modal ----------
+const modal=document.getElementById('case-modal'); 
+const modalClose=document.getElementById('modal-close');
+
+function openCaseModal({title,desc,tech,img}){
+  document.getElementById('modal-title').textContent=title;
+  document.getElementById('modal-desc').textContent=desc;
+  const techContainer=document.getElementById('modal-tech'); techContainer.innerHTML='';
+  tech.forEach(t=>{
+    const span=document.createElement('span'); 
+    span.textContent=t; 
+    techContainer.appendChild(span);
+  });
+  const imgDiv=document.getElementById('modal-img'); 
+  imgDiv.innerHTML=`<img src="${img}" alt="${title} preview">`;
+  modal.style.display='flex';
+  setTimeout(()=>{
+    const modalContent=modal.firstElementChild;
+    modalContent.style.transform='scale(1)';
+    modalContent.style.opacity='1';
+    const imgEl=modalContent.querySelector('img');
+    imgEl.style.transform='translateY(0)';
+    imgEl.style.opacity='1';
+  },50);
+}
+
+modalClose.addEventListener('click',()=>{
+  const modalContent=modal.firstElementChild;
+  modalContent.style.transform='scale(0.95)'; 
+  modalContent.style.opacity='0'; 
+  setTimeout(()=> modal.style.display='none',320);
+});
+
+modal.addEventListener('click',e=>{
+  if(e.target===modal) modalClose.click();
+});
+
+// --------- Scroll spy ----------
+const sections=document.querySelectorAll('section');
+const navLinks=document.querySelectorAll('nav a');
+window.addEventListener('scroll',()=>{
+  let current='';
+  sections.forEach(section=>{
+    const sectionTop=section.offsetTop - 80;
+    if(pageYOffset >= sectionTop) current=section.getAttribute('id');
+  });
+  navLinks.forEach(link=>{
+    link.style.color = (link.getAttribute('href').substring(1)===current)?'var(--accent)':(document.body.classList.contains('light')? 'var(--muted-light)':'var(--muted-dark)');
+  });
+});
+</script>
+
+</body>
+</html>
