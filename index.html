@@ -50,11 +50,100 @@
 
     /* responsive */
     @media(max-width:768px){.projects,.skills{flex-direction:column;}}
-    .social-icons a { margin: 0 0.5rem; font-size: 1.5rem; transition: transform 0.3s; }
-    .social-icons a:hover { transform: scale(1.2); }
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>turevia</title>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+<style>
+* { margin:0; padding:0; box-sizing:border-box; scroll-behavior: smooth; }
+body {
+    font-family: 'Courier New', Courier, monospace;
+    background-color: #0d0d0d;
+    color: #e0e0e0;
+    line-height: 1.6;
+    overflow-x: hidden;
+}
+
+/* particles canvas */
+#particles {
+    position: fixed;
+    top:0; left:0; width:100%; height:100%;
+    z-index: -1;
+}
+
+/* link styles */
+a { color: #006400; text-decoration: none; transition: color 0.3s, transform 0.3s; }
+a:hover { color: #00ff00; transform: scale(1.05); }
+
+/* header */
+header {
+    padding: 2rem;
+    text-align: center;
+    background-color: #111;
+    border-bottom: 2px solid #006400;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
+header h1 { font-size: 3rem; transition: transform 0.3s; }
+header h1:hover { transform: scale(1.05); }
+nav { margin-top: 1rem; }
+nav a { margin: 0 1rem; font-weight: bold; }
+
+/* sections */
+section {
+    padding: 3rem 2rem;
+    max-width: 1000px;
+    margin: auto;
+    opacity: 0;
+    transform: translateY(40px);
+    transition: transform 0.6s ease-out, opacity 0.6s ease-out;
+}
+h2 { color: #006400; margin-bottom: 1rem; border-bottom: 1px solid #006400; display:inline-block; }
+
+/* projects and skills */
+.projects, .skills { display: flex; flex-wrap: wrap; gap: 1rem; }
+.card {
+    background-color: #1a1a1a;
+    padding: 1rem;
+    border-radius: 8px;
+    flex: 1 1 250px;
+    border: 1px solid #006400;
+    transition: transform 0.4s, box-shadow 0.4s;
+    opacity: 0;
+    transform: translateY(20px) rotateX(5deg);
+}
+.card img { width: 100%; border-radius: 5px; margin-bottom: 0.5rem; }
+.card:hover {
+    transform: translateY(-10px) rotateX(0deg) scale(1.05);
+    box-shadow: 0 10px 20px rgba(0,100,0,0.6);
+}
+
+/* footer */
+footer {
+    text-align: center;
+    padding: 1rem;
+    border-top: 2px solid #006400;
+    font-size: 0.9rem;
+    margin-top: 2rem;
+}
+
+/* responsive */
+@media(max-width:768px){.projects,.skills{flex-direction:column;}}
+.social-icons a {
+    margin: 0 0.5rem;
+    font-size: 1.5rem;
+    transition: transform 0.3s, color 0.3s;
+}
+.social-icons a:hover { transform: scale(1.3); color: #00ff00; }
 </style>
 </head>
 <body>
+
+<canvas id="particles"></canvas>
 
 <header>
     <h1>turevia</h1>
@@ -68,27 +157,13 @@
 
 <section id="about">
     <h2>about</h2>
-    <p>Hello, I am Sidar. I work on software development, artificial intelligence, 3D modeling, and technical projects. This website showcases all my skills and projects.</p>
+    <p>Hello, I am sidar. I work on software development, artificial intelligence, 3D modeling, and technical projects. This website showcases all my skills and projects.</p>
 </section>
 
 <section id="projects">
     <h2>projects</h2>
     <div class="projects">
-        <div class="card">
-            <img src="https://via.placeholder.com/400x200" alt="Project 1">
-            <h3>Project 1</h3>
-            <p>Sample project description. Technologies used: HTML, CSS, JS</p>
-        </div>
-        <div class="card">
-            <img src="https://via.placeholder.com/400x200" alt="Project 2">
-            <h3>Project 2</h3>
-            <p>Sample project description. Technologies used: Python, AI</p>
-        </div>
-        <div class="card">
-            <img src="https://via.placeholder.com/400x200" alt="Project 3">
-            <h3>Project 3</h3>
-            <p>Sample project description. Technologies used: 3D Modeling</p>
-        </div>
+        <!-- project cards empty for now -->
     </div>
 </section>
 
@@ -114,6 +189,88 @@
 <footer>
     created by sidar
 </footer>
+
+<script>
+// particles.js basic implementation
+const canvas = document.getElementById('particles');
+const ctx = canvas.getContext('2d');
+let w = canvas.width = window.innerWidth;
+let h = canvas.height = window.innerHeight;
+
+const particlesArray = [];
+const particlesCount = 100;
+
+class Particle {
+    constructor(){
+        this.x = Math.random()*w;
+        this.y = Math.random()*h;
+        this.radius = Math.random()*2 + 1;
+        this.speedX = (Math.random()-0.5)*0.5;
+        this.speedY = (Math.random()-0.5)*0.5;
+    }
+    update(){
+        this.x += this.speedX;
+        this.y += this.speedY;
+        if(this.x<0||this.x>w) this.speedX*=-1;
+        if(this.y<0||this.y>h) this.speedY*=-1;
+    }
+    draw(){
+        ctx.beginPath();
+        ctx.arc(this.x,this.y,this.radius,0,Math.PI*2);
+        ctx.fillStyle = 'rgba(0,100,0,0.7)';
+        ctx.fill();
+    }
+}
+
+function initParticles(){
+    for(let i=0;i<particlesCount;i++){
+        particlesArray.push(new Particle());
+    }
+}
+
+function animateParticles(){
+    ctx.clearRect(0,0,w,h);
+    particlesArray.forEach(p=>{
+        p.update();
+        p.draw();
+    });
+    requestAnimationFrame(animateParticles);
+}
+
+// staggered cards animation
+window.addEventListener('DOMContentLoaded', () => {
+    const cards = document.querySelectorAll('.card');
+    cards.forEach((card, index) => {
+        setTimeout(() => {
+            card.style.opacity = '1';
+            card.style.transform = 'translateY(0) rotateX(0deg)';
+        }, 300 + index * 200);
+    });
+
+    const sections = document.querySelectorAll('section');
+    window.addEventListener('scroll', () => {
+        const scrollY = window.scrollY;
+        sections.forEach((sec, i) => {
+            if(sec.getBoundingClientRect().top < window.innerHeight*0.85){
+                sec.style.opacity = 1;
+                sec.style.transform = 'translateY(0)';
+            } else {
+                sec.style.opacity = 0;
+                sec.style.transform = 'translateY(40px)';
+            }
+        });
+    });
+});
+
+// handle resize
+window.addEventListener('resize', () => {
+    w = canvas.width = window.innerWidth;
+    h = canvas.height = window.innerHeight;
+});
+
+initParticles();
+animateParticles();
+</script>
 
 </body>
 </html>
